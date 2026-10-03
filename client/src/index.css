@@ -1,0 +1,167 @@
+/* ─── Google Fonts ───────────────────────────────────────────────── */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Noto+Sans+Arabic:wght@300;400;500;600;700;800&display=swap");
+
+@import "tailwindcss";
+
+/* ─── Custom Theme ───────────────────────────────────────────────── */
+@theme {
+  /* Brand palette — clinical, calm, trustworthy */
+  --color-sahha-900: #0a2f3b;
+  --color-sahha-800: #0e3d4e;
+  --color-sahha-700: #135668;
+  --color-sahha-600: #197082;
+  --color-sahha-500: #1f8a9c;
+  --color-sahha-400: #2bb0c4;
+  --color-sahha-300: #5cc8d8;
+  --color-sahha-200: #9fdfea;
+  --color-sahha-100: #d4f0f5;
+  --color-sahha-50: #edf9fb;
+
+  /* Accent — warm amber for CTAs and highlights */
+  --color-accent-600: #b45309;
+  --color-accent-500: #d97706;
+  --color-accent-400: #f59e0b;
+  --color-accent-300: #fbbf24;
+  --color-accent-200: #fde68a;
+  --color-accent-100: #fef3c7;
+
+  /* Neutral slate — used for text, borders, backgrounds */
+  --color-slate-950: #0b1120;
+  --color-slate-900: #0f172a;
+  --color-slate-800: #1e293b;
+  --color-slate-700: #334155;
+  --color-slate-600: #475569;
+  --color-slate-500: #64748b;
+  --color-slate-400: #94a3b8;
+  --color-slate-300: #cbd5e1;
+  --color-slate-200: #e2e8f0;
+  --color-slate-100: #f1f5f9;
+  --color-slate-50: #f8fafc;
+
+  /* Typography */
+  --font-sans: "Inter", "Noto Sans Arabic", system-ui, -apple-system, sans-serif;
+}
+
+/* ─── Base Styles ────────────────────────────────────────────────── */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* RTL-specific adjustments */
+[dir="rtl"] {
+  font-family: "Noto Sans Arabic", "Inter", system-ui, sans-serif;
+}
+
+/* ─── Glassmorphism Utility ──────────────────────────────────────── */
+.glass {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.glass-light {
+  background: rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+/* ─── Animations ─────────────────────────────────────────────────── */
+@keyframes fade-in-up {
+  0% {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-in {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(31, 138, 156, 0.15);
+  }
+  50% {
+    box-shadow: 0 0 40px rgba(31, 138, 156, 0.3);
+  }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-8px); }
+}
+
+@keyframes gradient-shift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.7s ease-out forwards;
+}
+
+.animate-fade-in {
+  animation: fade-in 0.5s ease-out forwards;
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 3s ease-in-out infinite;
+}
+
+.animate-float {
+  animation: float 4s ease-in-out infinite;
+}
+
+.animate-gradient {
+  background-size: 200% 200%;
+  animation: gradient-shift 6s ease infinite;
+}
+
+/* Staggered animation delays */
+.delay-100 { animation-delay: 100ms; }
+.delay-200 { animation-delay: 200ms; }
+.delay-300 { animation-delay: 300ms; }
+.delay-400 { animation-delay: 400ms; }
+.delay-500 { animation-delay: 500ms; }
+
+/* ─── Scrollbar Styling ──────────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-sahha-400);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-sahha-300);
+}
+
+/* ─── Clerk Component Overrides ──────────────────────────────────── */
+.cl-rootBox {
+  width: 100%;
+}
+
+.cl-card {
+  border-radius: 16px !important;
+  box-shadow: 0 8px 32px rgba(10, 47, 59, 0.12) !important;
+}
