@@ -4,6 +4,10 @@
 
 A full-stack Medical AI platform landing page with waitlist functionality, Clerk-based authentication, and a user dashboard that demonstrates webhook-based user synchronization between Clerk and a PostgreSQL database.
 
+**Live demo:** https://sahha-6c0v.onrender.com/
+
+> Note: hosted on Render's free tier. The first request after a period of inactivity may take a few seconds to respond — a health-check endpoint (`/api/health`) and uptime ping are in place to minimize this.
+
 ---
 
 ## Tech Stack
@@ -118,6 +122,17 @@ This project uses a **Clerk Development instance** for authentication. This is a
 
 ---
 
+## API Routes
+
+| Method | Endpoint | Auth | Description |
+|--------|----------|------|-------------|
+| `GET` | `/api/health` | No | Health check used by the uptime ping to keep the Render free-tier instance warm |
+| `POST` | `/api/waitlist` | No | Accepts `{ name, email }`, writes a row to the `waitlist` table |
+| `POST` | `/api/webhooks/clerk` | Signed (Svix) | Receives Clerk's `user.created` event, verifies signature, upserts into `users` |
+| `GET` | `/api/me` | Yes (Clerk session) | Returns `{ email, createdAt }` read from the app's own `users` table, not from Clerk's client-side session |
+
+---
+
 ## User Sync Architecture: Webhook-Based Approach
 
 ### How it works
@@ -159,18 +174,30 @@ There's an inherent race condition: the user might land on `/dashboard` before t
 
 ---
 
+## Deployment
+
+The app is deployed as a single Render Web Service — Express serves both the REST API and the built React production bundle, so there's one deployable unit rather than separate frontend/backend hosts.
+
+- **Build:** installs root, client, and server dependencies, then builds the client bundle
+- **Start:** runs the Express server, which serves `/api/*` routes and falls back to the built client for all other routes
+- **Database:** connects to the same Neon instance used locally, via pooled connection
+- **Uptime:** an external cron ping hits `/api/health` periodically to avoid Render free-tier cold starts
+
+---
+
 ## What I'd Do Differently With More Time
 
-1. **Webhook failure handling**: Add a dead letter queue or at least persistent logging for failed webhook processing, not just console.error
-2. **Lazy creation fallback**: As a belt-and-suspenders approach, add a fallback in the `/api/me` route that creates the user row from the Clerk session if the webhook hasn't fired yet
-3. **Email uniqueness**: Add a unique constraint on email in the waitlist table to prevent duplicate signups
-4. **Form validation**: Use a schema validation library (Zod) for both client and server-side validation with shared types
-5. **Error boundaries**: Add React error boundaries for graceful failure handling
-6. **Accessibility audit**: Full WCAG 2.1 AA compliance testing, especially for the RTL layout
-7. **Integration tests**: Test the webhook flow end-to-end, including signature verification
-8. **Rate limiting**: Add basic rate limiting on the waitlist endpoint to prevent abuse
-9. **Clerk localization prop**: Pass the full Arabic localization object to Clerk's components via their `localization` prop for complete Arabic auth UI
-10. **Loading skeletons**: Replace spinner-based loading states with skeleton screens for better perceived performance
+The assignment explicitly scoped out production-grade security hardening and a fully-featured product in favor of seeing prioritization and trade-offs under a time box. These are the things I deliberately deferred, roughly in order of what I'd tackle first:
+
+1. **Lazy creation fallback**: Add a fallback in `/api/me` that creates the user row from the Clerk session if the webhook hasn't fired yet — belt-and-suspenders against webhook delivery failure
+2. **Webhook failure handling**: Persistent logging (or a dead letter queue) for failed webhook processing, instead of just `console.error`
+3. **Integration tests**: End-to-end tests for the webhook flow, including signature verification and the idempotency path
+4. **Form validation**: Shared Zod schemas for client and server-side validation, instead of ad-hoc checks
+5. **Rate limiting**: Basic rate limiting on the waitlist and webhook endpoints to prevent abuse
+6. **Email uniqueness**: Unique constraint on email in the waitlist table to prevent duplicate signups
+7. **Accessibility audit**: Full WCAG 2.1 AA pass, especially around the RTL layout
+8. **Error boundaries**: React error boundaries for graceful client-side failure handling
+9. **Loading skeletons**: Replace spinner-based loading states with skeleton screens for better perceived performance
 
 ---
 
