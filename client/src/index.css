@@ -165,3 +165,20 @@ body {
   border-radius: 16px !important;
   box-shadow: 0 8px 32px rgba(10, 47, 59, 0.12) !important;
 }
+
+/* Ensure email and credentials inputs always type LTR with proper cursor alignment */
+.cl-formFieldInput,
+.cl-formFieldInput input,
+input[type="email"],
+input[type="password"],
+input[type="tel"] {
+  direction: ltr !important;
+  text-align: left !important;
+  unicode-bidi: isolate !important;
+}
+
+/* Keep form field labels aligned with the reading direction */
+.cl-formFieldLabel {
+  text-align: start !important;
+}
+
