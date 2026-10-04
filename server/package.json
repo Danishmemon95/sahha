@@ -16,11 +16,18 @@
   "description": "",
   "dependencies": {
     "@clerk/express": "^2.1.75",
+    "@types/cors": "^2.8.17",
+    "@types/express": "^5.0.0",
+    "@types/node": "^22.13.1",
+    "@types/pg": "^8.11.11",
     "cors": "^2.8.6",
     "dotenv": "^18.0.5",
+    "drizzle-kit": "^0.31.9",
     "drizzle-orm": "^0.45.3",
     "express": "^5.2.1",
     "pg": "^8.23.1",
-    "svix": "^1.99.1"
+    "svix": "^1.99.1",
+    "tsx": "^4.19.4",
+    "typescript": "^5.7.3"
   }
 }
