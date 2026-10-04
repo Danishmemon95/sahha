@@ -4,6 +4,7 @@ import { defineConfig } from "vite";
 
 export default defineConfig({
   plugins: [react(), tailwindcss()],
+  envPrefix: ["VITE_", "CLERK_"],
   server: {
     proxy: {
       // Proxy API requests to the Express server during development
