@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import path from "path";
+import fs from "fs";
 import { fileURLToPath } from "url";
 import dotenv from "dotenv";
 import { clerkMiddleware } from "@clerk/express";
@@ -11,8 +12,9 @@ import waitlistRouter from "./routes/waitlist.js";
 import webhooksRouter from "./routes/webhooks.js";
 import meRouter from "./routes/me.js";
 
-// Load environment variables from project root
+// Load environment variables from project root (support running from root, server/, or server/dist/)
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
+dotenv.config({ path: path.resolve(__dirname, "../../.env") });
 dotenv.config({ path: path.resolve(__dirname, "../.env") });
 
 const app = express();
@@ -49,7 +51,17 @@ app.use("/api/me", meRouter);
 // ─── Serve Built Frontend (production only) ─────────────────────────
 // In production, Express serves the Vite-built React app as static files.
 // All non-API routes fall through to index.html for client-side routing.
-const clientDistPath = path.resolve(__dirname, "../client/dist");
+const possibleClientDistPaths = [
+  path.resolve(__dirname, "../../client/dist"), // when running compiled code from server/dist/
+  path.resolve(__dirname, "../client/dist"),    // when running TypeScript via tsx from server/
+  path.resolve(process.cwd(), "client/dist"),
+  path.resolve(process.cwd(), "../client/dist"),
+];
+
+const clientDistPath =
+  possibleClientDistPaths.find((p) => fs.existsSync(p)) ||
+  possibleClientDistPaths[0];
+
 app.use(express.static(clientDistPath));
 
 app.get("{*path}", (_req, res) => {
