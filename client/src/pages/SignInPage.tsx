@@ -27,7 +27,7 @@ export default function SignInPage() {
                 "bg-gradient-to-r from-sahha-600 to-sahha-700 hover:from-sahha-700 hover:to-sahha-800 shadow-lg shadow-sahha-500/20",
               footerActionLink: "text-sahha-600 hover:text-sahha-700",
               formFieldInput:
-                "rounded-xl border-slate-200 focus:ring-sahha-400/40 focus:border-sahha-400 [direction:ltr] text-left",
+                "rounded-xl border-slate-200 focus:ring-sahha-400/40 focus:border-sahha-400",
             },
           }}
         />

@@ -167,18 +167,55 @@ body {
 }
 
 /* Ensure email and credentials inputs always type LTR with proper cursor alignment */
-.cl-formFieldInput,
-.cl-formFieldInput input,
+.cl-formFieldInput input[type="email"],
 input[type="email"],
-input[type="password"],
 input[type="tel"] {
   direction: ltr !important;
   text-align: left !important;
   unicode-bidi: isolate !important;
+  padding-left: 1rem !important;
+  padding-right: 1rem !important;
+}
+
+/* Password field styling: text on left, eye button cleanly on the right with plenty of padding */
+input[type="password"],
+.cl-formFieldInput input[type="password"] {
+  direction: ltr !important;
+  text-align: left !important;
+  unicode-bidi: isolate !important;
+  padding-left: 1rem !important;
+  padding-right: 2.75rem !important;
+}
+
+/* Ensure the password input container has relative positioning and LTR layout */
+.cl-formFieldInput__password,
+.cl-formFieldRow__password,
+.cl-formFieldInputGroup,
+div:has(> input[type="password"]),
+[dir="rtl"] div:has(> input[type="password"]) {
+  direction: ltr !important;
+  position: relative !important;
+}
+
+/* Ensure password eye button is pinned to the right side inside the input */
+div:has(> input[type="password"]) button,
+.cl-formFieldInput__password button,
+.cl-formFieldAction,
+.cl-formFieldAction__password,
+[dir="rtl"] div:has(> input[type="password"]) button,
+[dir="rtl"] .cl-formFieldAction {
+  position: absolute !important;
+  right: 0.75rem !important;
+  left: auto !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  z-index: 20 !important;
+  margin: 0 !important;
 }
 
 /* Keep form field labels aligned with the reading direction */
 .cl-formFieldLabel {
   text-align: start !important;
 }
+
 

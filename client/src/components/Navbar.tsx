@@ -7,12 +7,12 @@ export default function Navbar() {
   const { isSignedIn, isLoaded } = useAuth();
 
   return (
-    <nav className="fixed top-0 inset-x-0 z-50 glass-light">
-      <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+    <nav className="fixed top-0 inset-x-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200/80 shadow-xs transition-all duration-200">
+      <div className="max-w-7xl mx-auto px-6 py-3.5 flex items-center justify-between">
         {/* Brand */}
         <Link
           to="/"
-          className="flex items-center gap-2.5 text-sahha-800 font-bold text-xl tracking-tight hover:text-sahha-600 transition-colors"
+          className="flex items-center gap-2.5 text-sahha-800 font-bold text-xl tracking-tight hover:text-sahha-600 transition-colors outline-none focus:outline-none focus-visible:ring-2 focus-visible:ring-sahha-500/20 rounded-xl"
         >
           <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-sahha-500 to-sahha-700 flex items-center justify-center shadow-md">
             <svg
