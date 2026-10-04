@@ -10,7 +10,7 @@
     "build": "cd client && npm install --include=dev && npm run build && cd ../server && npm install --include=dev && npm run build",
     "build:migrate": "cd server && npm run db:migrate",
     "render-build": "npm install --include=dev && cd client && npm install --include=dev && npm run build && cd ../server && npm install --include=dev && npm run build && npm run db:migrate",
-    "start": "cd server && tsx index.ts",
+    "start": "cd server && node dist/index.js",
     "db:generate": "cd server && npm run db:generate",
     "db:migrate": "cd server && npm run db:migrate"
   },
